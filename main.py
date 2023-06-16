@@ -1,4 +1,5 @@
 import json
+from pprint import pprint
 with open ('recipes.txt', 'r', encoding="utf-8") as file:
     cook_book = {}
     for recipe in file:
@@ -26,7 +27,8 @@ def get_shop_list_by_dishes(dishes, persons):
     shop_list = {}
     for dish in dishes:
         for component in cook_book[dish]:
-            shop_list[component['ingredient_name']] = {}
+            if component['ingredient_name'] not in shop_list:
+                shop_list[component['ingredient_name']] = {}
             for key, value in component.items():
                 if value != component['ingredient_name']:
                     shop_list[component['ingredient_name']].setdefault(key, value)
@@ -36,5 +38,5 @@ def get_shop_list_by_dishes(dishes, persons):
 
     for key, value in shop_list.items():
         print("{0}: {1}".format(key,value))
-get_shop_list_by_dishes(['Запеченный картофель', 'Омлет'], 2)
+get_shop_list_by_dishes(['Омлет', 'Фахитос'], 2)
 
